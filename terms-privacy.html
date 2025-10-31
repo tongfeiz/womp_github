@@ -370,7 +370,7 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <a href="v3.html" class="logo">
+        <a href="index.html" class="logo">
             <img src="images/womplogo.png" alt="Womp Logo">
             womp
         </a>
@@ -426,9 +426,9 @@
             <div class="footer-left">
                 <div class="footer-copyright">© 2025 womp | <a href="terms-privacy.html" style="color: #A0A0A0; text-decoration: none; transition: color 0.3s ease;">Terms & Privacy</a></div>
                 <div class="footer-links">
-                    <a href="v3.html" id="nav-home">Home</a>
+                    <a href="index.html" id="nav-home">Home</a>
                     <a href="https://x.com/wompalarm" target="_blank" id="nav-story">Story</a>
-                    <a href="v3.html#features" id="nav-features">Features</a>
+                    <a href="index.html#features" id="nav-features">Features</a>
                 </div>
             </div>
             <div class="footer-social">
@@ -461,7 +461,7 @@
             observer.observe(section);
         });
 
-        // Handle Features link - if on terms page, go to v3.html#features
+        // Handle Features link - if on terms page, go to index.html#features
         const navFeatures = document.getElementById('nav-features');
         if (navFeatures) {
             navFeatures.addEventListener('click', function(e) {
@@ -469,7 +469,7 @@
                 try {
                     sessionStorage.setItem('scrollToFeatures', '1');
                 } catch (_) {}
-                window.location.href = 'v3.html';
+                window.location.href = 'index.html';
             });
         }
     </script>
