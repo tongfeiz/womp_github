@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>womp</title>
+    <link rel="icon" type="image/x-icon" href="images/womplogo.png">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #030303;
+            color: #eaeaea;
+            line-height: 1.6;
+            letter-spacing: -0.2px;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* padding: 20px 35px; */
+            padding: 10px 10px;
+            padding-left: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 22px;
+            border-radius: 9999px;
+            background: rgba(31, 31, 31, 0.55);
+            backdrop-filter: blur(16px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #eaeaea;
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes logoDance {
+            0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+            25%  { transform: translate3d(0px, -1px, 0) rotate(-5deg) scale(1.02); }
+            50%  { transform: translate3d(0px, 1px, 0) rotate(4deg) scale(1.01); }
+            75%  { transform: translate3d(0px, -0.5px, 0) rotate(-3deg) scale(1.01); }
+            100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+        }
+
+        .logo:hover img {
+            animation: logoDance 500ms ease-in-out both;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            background: transparent;
+            border: none;
+            color: #eaeaea;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            padding: 8px 22px;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+
+        .nav-button {
+            background: #eaeaea;
+            border: none;
+            color: #030303;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            padding: 16px 28px;
+            border-radius: 9999px;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-button:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 60vh;
+            min-height: 750px;
+            overflow: hidden;
+        }
+
+        .hero-image img,
+        .hero-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Bed Image Section */
+        .bed-image {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 40px 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* On-load fade for bed and arrow */
+        .bed-image,
+        .scroll-indicator { 
+            opacity: 0; 
+            transition: opacity 0.8s ease; 
+        }
+
+        .bed-image.is-visible,
+        .scroll-indicator.is-visible { 
+            opacity: 1; 
+        }
+
+        .bed-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Scroll Indicator below bed */
+        .scroll-indicator {
+            text-align: center;
+            margin: 8px 0 0;
+        }
+
+        .scroll-indicator .chevron {
+            display: inline-block;
+            font-size: 24px;
+            line-height: 1;
+            color: #A0A0A0;
+            opacity: 0.7;
+            animation: scrollPulse 1.6s ease-in-out infinite;
+            user-select: none;
+        }
+
+        @keyframes scrollPulse {
+            0% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(6px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.5; }
+        }
+
+        /* Problem Section */
+        .problem {
+            text-align: center;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .problem.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-label {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+            text-align: center;
+        }
+
+        .section-label .phase-prefix {
+            color: #808080;
+        }
+
+        .section-label .phase-name {
+            color: #eaeaea;
+        }
+
+        .section-heading {
+            font-size: 20px;
+            font-weight: 400;
+            color: #eaeaea;
+            margin-bottom: 24px;
+            letter-spacing: -0.2px;
+            text-align: center;
+        }
+
+        .problem-text {
+            font-size: 18px;
+            font-weight: 100;
+            color: #eaeaea;
+            line-height: 1.6;
+            letter-spacing: -0.2px;
+        }
+
+        /* Solution Section */
+        .solution {
+            text-align: center;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .solution.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-container {
+            width: 500px;
+            height: 500px;
+            background: #000000;
+            border-radius: 12px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .features.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .features-stage { position: relative; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* Feature Float Images (below grid) */
+        .feature-floats {
+            position: absolute; /* sit exactly under the grid */
+            inset: 0; /* top:0; right:0; bottom:0; left:0 */
+            height: 100%;
+            z-index: 0;
+            margin: 0;
+        }
+
+        .feature-floats .float-image {
+            position: absolute;
+            width: 300px;
+            height: auto;
+            border-radius: 12px;
+            opacity: 0%;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Corner placement + orientation */
+        .feature-floats .top-left { top: 0; left: 0; transform: rotate(-11deg); }
+        .feature-floats .top-right { top: 0; right: 0; transform: rotate(-169deg); }
+        .feature-floats .bottom-left { bottom: 0; left: 0; transform: rotate(11deg); }
+        .feature-floats .bottom-right { bottom: 0; right: 0; transform: rotate(169deg); }
+
+        /* Visibility toggle */
+        .feature-floats .show { opacity: 1; }
+
+        /* Motion on reveal (translate + slight extra rotation per corner) */
+        .feature-floats .top-left.show { transform: rotate(-21deg) translate(-100px, -100px); }
+        .feature-floats .top-right.show { transform: rotate(-159deg) translate(-100px, 100px); }
+        .feature-floats .bottom-left.show { transform: rotate(21deg) translate(-100px, 100px); }
+        .feature-floats .bottom-right.show { transform: rotate(159deg) translate(-100px, -100px); }
+
+        .feature-card {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 20px;
+            padding-bottom: 80px;
+            transition: background-color 0.3s ease;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 0.5px, transparent 0),
+                radial-gradient(circle at 3px 3px, rgba(0, 0, 0, 0.15) 0.5px, transparent 0);
+            background-size: 4px 4px, 2px 2px;
+            background-position: 0 0, 1px 1px;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .feature-card:hover {
+            background: #030303;
+        }
+
+        .feature-number {
+            font-size: 16px;
+            font-weight: 400;
+            color: #A0A0A0;
+            margin-bottom: 0px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #eaeaea;
+            margin-bottom: 0px;
+            letter-spacing: -0.2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            font-weight: 400;
+            color: #A0A0A0;
+            line-height: 1.5;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Users Section */
+        .users {
+            text-align: center;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .users.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .users-text {
+            font-size: 18px;
+            font-weight: 400;
+            color: #eaeaea;
+            line-height: 1.6;
+            letter-spacing: -0.2px;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .cta.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-heading {
+            font-size: 28px;
+            font-weight: 700;
+            color: #eaeaea;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+        }
+
+        .cta-subheading {
+            font-size: 18px;
+            font-weight: 400;
+            color: #eaeaea;
+            margin-bottom: 40px;
+            letter-spacing: -0.2px;
+        }
+
+        .cta-button {
+            background: #FF7434;
+            color: #eaeaea;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 400;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: -0.2px;
+        }
+
+        .cta-button:hover {
+            background: #333333;
+            transform: translateY(-2px);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .faq.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-title {
+            font-size: 35px;
+            font-weight: 700;
+            color: #eaeaea;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .faq-list {
+            list-style: none;
+        }
+
+        .faq-item {
+            border-top: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            margin-bottom: -1px;
+        }
+
+        .faq-question {
+            font-size: 20px;
+            font-weight: 400;
+            color: #eaeaea;
+            padding: 24px 0;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+            letter-spacing: -0.2px;
+        }
+
+        .faq-question:hover {
+            color: #ffffff;
+        }
+
+        .faq-answer-wrapper {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-answer-wrapper.open {
+            max-height: 500px;
+        }
+
+        .faq-answer {
+            font-size: 18px;
+            font-weight: 400;
+            color: #808080;
+            padding: 0 0 24px 0;
+            line-height: 1.6;
+            letter-spacing: -0.2px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-answer-wrapper.open .faq-answer {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .faq-answer-wrapper:not(.open) .faq-answer {
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 10px 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: visible;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .footer.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            font-weight: 400;
+            color: #A0A0A0;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #A0A0A0;
+        }
+
+        .footer-links a {
+            color: #A0A0A0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #eaeaea;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            background: #222222;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #eaeaea;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #333333;
+        }
+
+        .footer-logo {
+            text-align: center;
+            font-size: 300px;
+            font-weight: 700;
+            color: #ffffff;
+            opacity: 0.12;
+            margin-top: -100px;
+            padding: 0;
+            margin-bottom: -100px;
+            line-height: 1.2;
+            height: auto;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.1) 85%, transparent 100%);
+            /* -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.05) 85%, transparent 100%); */
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        /* Responsive Design */
+        
+        /* iPad (Portrait & Landscape) */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .header {
+                padding: 8px 8px;
+                padding-left: 25px;
+            }
+
+            .bed-image {
+                max-width: 90%;
+                padding: 40px 24px 0;
+            }
+
+            .problem, .solution, .users, .cta, .faq, .features {
+                padding: 60px 32px;
+                max-width: 90%;
+            }
+
+            .video-container {
+                width: 90%;
+                max-width: 450px;
+                height: 450px;
+            }
+
+            .hero-image {
+                min-height: 500px;
+                height: 50vh;
+            }
+        }
+
+        /* Phone & Small Tablets */
+        @media (max-width: 768px) {
+            .header {
+                padding: 8px 8px;
+                padding-left: 20px;
+                width: 90%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo img {
+                width: 28px;
+                height: 28px;
+            }
+
+            .hero {
+                padding: 0;
+            }
+
+            .hero-image {
+                height: 40vh;
+                min-height: 400px;
+            }
+
+            .bed-image {
+                max-width: 85%;
+                margin: 20px auto;
+                padding: 40px 32px 0;
+            }
+
+            .problem, .solution, .users, .cta, .faq, .features {
+                padding: 60px 32px;
+                max-width: 85%;
+            }
+
+            .faq-title {
+                font-size: 32px;
+            }
+
+            .section-heading {
+                font-size: 18px;
+            }
+
+            .section-label {
+                font-size: 14px;
+            }
+
+            .problem-text, .users-text {
+                font-size: 16px;
+            }
+
+            .cta-heading {
+                font-size: 28px;
+            }
+
+            .cta-subheading {
+                font-size: 16px;
+            }
+
+            .video-container {
+                width: 85%;
+                max-width: 400px;
+                height: 400px;
+                margin: 32px auto;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .feature-card {
+                padding: 20px;
+                padding-bottom: 60px;
+            }
+
+            .feature-floats { height: 100%; }
+            .feature-floats .float-image { width: 45%; }
+
+            .feature-title {
+                font-size: 18px;
+            }
+
+            .feature-description {
+                font-size: 14px;
+            }
+
+            .faq-question {
+                font-size: 18px;
+                padding: 20px 0;
+            }
+
+            .faq-answer {
+                font-size: 16px;
+            }
+
+            .footer {
+                padding: 60px 32px 100px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-logo {
+                font-size: 27vw;
+                margin-top: -60px;
+                margin-bottom: -60px;
+            }
+
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+
+        /* Small Phones */
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 24px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .nav-button {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+
+            .hero-image {
+                height: 35vh;
+                min-height: 300px;
+            }
+
+            .bed-image {
+                max-width: 80%;
+                padding: 32px 24px 0;
+                margin: 16px auto;
+            }
+
+            .problem, .solution, .users, .cta, .faq, .features {
+                padding: 50px 24px;
+                max-width: 80%;
+            }
+
+            .faq-title {
+                font-size: 28px;
+                margin-bottom: 16px;
+            }
+
+            .section-heading {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .section-label {
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            .problem-text, .users-text {
+                font-size: 15px;
+            }
+
+            .cta-heading {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .cta-subheading {
+                font-size: 15px;
+                margin-bottom: 32px;
+            }
+
+            .video-container {
+                width: 80%;
+                max-width: 350px;
+                height: 350px;
+                margin: 24px auto;
+            }
+
+            .features {
+                padding: 50px 24px;
+            }
+
+            .feature-card {
+                padding: 18px;
+                padding-bottom: 50px;
+            }
+
+            .feature-floats { height: 100%; }
+            .feature-floats .float-image { width: 48%; }
+
+            .feature-number {
+                font-size: 14px;
+            }
+
+            .feature-title {
+                font-size: 16px;
+            }
+
+            .feature-description {
+                font-size: 13px;
+            }
+
+            .faq-question {
+                font-size: 16px;
+                padding: 18px 0;
+            }
+
+            .faq-answer {
+                font-size: 15px;
+                padding: 0 0 18px 0;
+            }
+
+            .footer {
+                padding: 50px 24px 80px;
+            }
+
+            .footer-copyright {
+                font-size: 12px;
+            }
+
+            .footer-links {
+                font-size: 12px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .footer-logo {
+                font-size: 80px;
+                margin-top: -40px;
+                margin-bottom: -40px;
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 15px;
+            }
+
+            .scroll-indicator {
+                margin: 4px 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="images/womplogo.png" alt="Womp Logo">
+            womp
+        </div>
+        <div class="nav-actions">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="nav-link">Watch Trailer</a>
+            <a href="https://form.typeform.com/to/Sj3IxLNZ?typeform-source=www.womp.systems" target="_blank" style="text-decoration: none;">
+                <button class="nav-button">Join Waitlist</button>
+            </a>
+        </div>
+    </header>
+
+    <br><br><br><br>
+
+    <!-- Bed Image -->
+    <div class="bed-image">
+        <img src="images/bed.png" alt="Bed">
+    </div>
+    <div class="scroll-indicator"><span class="chevron">v</span></div>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="section-label"><span class="phase-prefix">Phase /</span> <span class="phase-name">Problem</span></div>
+        <h1 class="section-heading">You know that feeling.</h1>
+        <p class="problem-text" style="color: #808080;">You wake up, the light's wrong, your heart drops, you check your phone, and it's already too late. You meant to get up. <span style="color: #eaeaea;">But your alarm?</span> Didn't stand a chance.</p>
+    </section>
+
+    <br><br>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="section-label"><span class="phase-prefix">Phase /</span> <span class="phase-name">Solution</span></div>
+        <div class="video-container">
+            <img src="images/devicescreen.png" alt="Device Screen" class="solution-video">
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-label"><span class="phase-prefix">Phase /</span> <span class="phase-name">Awakening</span></div>
+        <h2 class="section-heading">The product. Take a look at womp's features.</h2>
+        <div class="features-stage">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-number">01</div>
+                <div class="feature-title">Invisible</div>
+                <div class="feature-description">Blends into your space.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">02</div>
+                <div class="feature-title">Set alarm</div>
+                <div class="feature-description">Dial your time, set your intensity.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">03</div>
+                <div class="feature-title">Tiered alert</div>
+                <div class="feature-description">Wakes you up silently.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-number">04</div>
+                <div class="feature-title">Walk to stop</div>
+                <div class="feature-description">Won't quit until you get up.</div>
+            </div>
+        </div>
+
+        <!-- New float image section: directly beneath features-grid -->
+        <div class="feature-floats" id="feature-floats">
+            <img id="float-01" class="float-image top-left" src="images/01float.png" alt="Feature 01 float">
+            <img id="float-02" class="float-image top-right" src="images/02float.png" alt="Feature 02 float">
+            <img id="float-03" class="float-image bottom-left" src="images/03float.png" alt="Feature 03 float">
+            <img id="float-04" class="float-image bottom-right" src="images/04float.png" alt="Feature 04 float">
+        </div>
+        </div>
+    </section>
+
+    <br><br>
+
+    <!-- Users Section -->
+    <section class="users">
+        <div class="section-label"><span class="phase-prefix">Phase /</span> <span class="phase-name">Users</span></div>
+        <h2 class="section-heading">womp isn't for everyone.</h2>
+        <p class="users-text" style="color: #808080;">It's for deep sleepers, chronic snoozers, loud roommates, or anyone who <span style="color: #eaeaea;">can't afford to be late</span>.</p>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2 class="cta-heading">The alarm that wakes you up like a real human would.</h2>
+        <p class="cta-subheading">We hold you accountable. No snoozing. No slipping.</p>
+        <a href="https://form.typeform.com/to/Sj3IxLNZ?typeform-source=www.womp.systems" target="_blank" style="text-decoration: none;">
+            <button class="cta-button">Join Waitlist</button>
+        </a>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <h2 class="faq-title">FAQ</h2>
+        <ul class="faq-list">
+            <li class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Do I need a new mattress?
+                </div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">
+                        Nope. Womp works with the one you already have. Just strap it on and sleep like usual. We’ll handle the rest.
+                    </div>
+                </div>
+            </li>
+            <li class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How strong are the vibrations?
+                </div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">
+                        Our vibrating motors are roughly 10x stronger than the ones in your phone. They’re built to move you, not buzz politely.
+                    </div>
+                </div>
+            </li>
+            <li class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What happens if I ignore it or don't get up?
+                </div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">
+                        You’re welcome to try. Womp starts calm, but escalates until you’re up and moving. For the truly stubborn, we have a powerful speaker as backup.
+                    </div>
+                </div>
+            </li>
+            <li class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Won’t this just make me more tired?
+                </div>
+                <div class="faq-answer-wrapper">
+                    <div class="faq-answer">
+                        The opposite. womp eliminates snooze spirals and get you up exactly when you need. Down the road, it’ll even learn your sleep patterns to help you wake up smarter. The less you need us, the better we’ve done our job.
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+
+
+<!-- make it one at a time  -->
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-copyright">© 2025 womp | <a href="terms-privacy.html" style="color: #A0A0A0; text-decoration: none; transition: color 0.3s ease;">Terms & Privacy</a></div>
+                <div class="footer-links">
+                    <a href="#" id="nav-home">Home</a>
+                    <a href="https://x.com/wompalarm" target="_blank" id="nav-story">Story</a>
+                    <a href="#" id="nav-features">Features</a>
+                </div>
+            </div>
+            <div class="footer-social">
+                <div class="social-icon">@</div>
+                <div class="social-icon">X</div>
+                <div class="social-icon">in</div>
+            </div>
+        </div>
+        <div class="footer-logo">womp</div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            const wrapper = element.nextElementSibling;
+            const isOpen = wrapper.classList.contains('open');
+            
+            // Close any other open FAQ answers first
+            document.querySelectorAll('.faq-answer-wrapper.open').forEach(other => {
+                if (other !== wrapper) {
+                    other.classList.remove('open');
+                    other.style.maxHeight = '0px';
+                }
+            });
+
+            if (isOpen) {
+                // Collapse current
+                wrapper.classList.remove('open');
+                wrapper.style.maxHeight = '0px';
+            } else {
+                // Expand current with its exact height for a smooth animation
+                wrapper.classList.add('open');
+                wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            }
+        }
+
+        // Keep open FAQ heights in sync on resize
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.faq-answer-wrapper.open').forEach(wrapper => {
+                wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            });
+        });
+
+        // Enhanced smooth scrolling with easing
+        let isScrolling = false;
+
+        function smoothScrollTo(element, duration = 800) {
+            if (isScrolling) return;
+            isScrolling = true;
+
+            const start = window.pageYOffset;
+            const target = element.getBoundingClientRect().top + window.pageYOffset - 100;
+            const distance = target - start;
+            let startTime = null;
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+            }
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const ease = easeInOutCubic(progress);
+
+                window.scrollTo(0, start + distance * ease);
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                } else {
+                    isScrolling = false;
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
+
+        // Apply smooth scroll to anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    smoothScrollTo(target);
+                }
+            });
+        });
+
+        // Navigation logic
+        const navHome = document.getElementById('nav-home');
+        const navFeatures = document.getElementById('nav-features');
+        
+        if (navHome) {
+            navHome.addEventListener('click', function(e) {
+                e.preventDefault();
+                // On home page, scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        if (navFeatures) {
+            navFeatures.addEventListener('click', function(e) {
+                e.preventDefault();
+                // On home page, scroll to features section using native smooth scroll
+                const featuresSection = document.getElementById('features');
+                if (featuresSection) {
+                    const targetTop = featuresSection.getBoundingClientRect().top + window.pageYOffset - 100;
+                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+                }
+            });
+        }
+
+        // Handle hash/navigation flags on page load (e.g., from terms-privacy.html)
+        window.addEventListener('load', function() {
+            const featuresSection = document.getElementById('features');
+            let shouldScrollToFeatures = false;
+            try {
+                if (sessionStorage.getItem('scrollToFeatures') === '1') {
+                    shouldScrollToFeatures = true;
+                    sessionStorage.removeItem('scrollToFeatures');
+                }
+            } catch (_) {}
+
+            if (window.location.hash === '#features') {
+                shouldScrollToFeatures = true;
+            }
+
+            if (shouldScrollToFeatures && featuresSection) {
+                setTimeout(function() {
+                    const targetTop = featuresSection.getBoundingClientRect().top + window.pageYOffset - 100;
+                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+                }, 120);
+            }
+
+            // On-load fade-in for bed and arrow
+            try {
+                const bed = document.querySelector('.bed-image');
+                const arrow = document.querySelector('.scroll-indicator');
+                setTimeout(function() {
+                    if (bed) bed.classList.add('is-visible');
+                    if (arrow) arrow.classList.add('is-visible');
+                }, 120);
+            } catch (_) {}
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections that should fade in
+        const sectionsToFade = document.querySelectorAll('.problem, .solution, .features, .users, .cta, .faq, .footer');
+        sectionsToFade.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Feature float images: light up matching image on hover (01-04)
+        const featureCards = document.querySelectorAll('.features-grid .feature-card');
+        const floatImages = [
+            document.getElementById('float-01'),
+            document.getElementById('float-02'),
+            document.getElementById('float-03'),
+            document.getElementById('float-04')
+        ];
+
+        function hideAllFloats() {
+            floatImages.forEach(img => img && img.classList.remove('show'));
+        }
+
+        featureCards.forEach((card, idx) => {
+            card.addEventListener('mouseenter', () => {
+                hideAllFloats();
+                const img = floatImages[idx];
+                if (img) img.classList.add('show');
+            });
+            card.addEventListener('mouseleave', () => {
+                const img = floatImages[idx];
+                if (img) img.classList.remove('show');
+            });
+        });
+    </script>
+
+
+
+
+
+</body>
+</html>
