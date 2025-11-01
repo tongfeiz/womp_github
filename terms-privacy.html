@@ -331,21 +331,40 @@
 
         @media (max-width: 480px) {
             .header {
-                padding: 20px 24px;
+                padding: 8px 12px;
+                padding-left: 16px;
+                width: calc(100% - 24px);
+                margin-left: 12px;
+                margin-right: 12px;
             }
 
             .logo {
-                font-size: 18px;
+                font-size: 16px;
             }
 
-            .nav-button {
+            .logo img {
+                width: 24px;
+                height: 24px;
+            }
+
+            .nav-actions {
+                gap: 6px;
+            }
+
+            .nav-link {
                 font-size: 14px;
                 padding: 6px 12px;
             }
 
+            .nav-button {
+                font-size: 13px;
+                padding: 8px 16px;
+                white-space: nowrap;
+            }
+
             .content-section {
-                padding: 100px 24px 50px;
-                max-width: 80%;
+                padding: 100px 20px 50px;
+                max-width: 100%;
             }
 
             .content-title {
@@ -392,7 +411,7 @@
             womp
         </a>
         <div class="nav-actions">
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="nav-link">Watch Trailer</a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="nav-link">Trailer</a>
             <a href="https://form.typeform.com/to/Sj3IxLNZ?typeform-source=www.womp.systems" target="_blank" style="text-decoration: none;">
                 <button class="nav-button">Join Waitlist</button>
             </a>
