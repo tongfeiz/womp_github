@@ -64,7 +64,7 @@
             max-width: 1200px;
             margin: 0 auto;
             margin-top: 22px;
-            border-radius: 9999px;
+            border-radius: 25px;
             background: rgba(31, 31, 31, 0.55);
             backdrop-filter: blur(16px);
         }
@@ -72,15 +72,15 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #eaeaea;
             text-decoration: none;
         }
 
         .logo img {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             transform-origin: 50% 50%;
         }
 
@@ -120,15 +120,15 @@
         }
 
         .nav-button {
-            background: #eaeaea;
+            background: #FF7434;
             border: none;
-            color: #030303;
+            color: #ffffff;
             font-size: 16px;
             font-weight: 400;
             font-family: 'DM Sans', sans-serif;
             cursor: pointer;
             padding: 16px 28px;
-            border-radius: 9999px;
+            border-radius: 15px;
             transition: opacity 0.3s ease;
         }
 
@@ -194,6 +194,25 @@
             transform: translateY(0);
         }
 
+        /* Full-bleed stars banner above footer content */
+        .footer-stars {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+
+        .footer-stars img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Thin divider matching FAQ borders, within footer margins */
+        .footer-divider {
+            border-top: 1px solid #333333;
+            margin: 20px 0 40px;
+        }
+
         .footer-content {
             display: flex;
             justify-content: space-between;
@@ -236,7 +255,7 @@
             gap: 12px;
         }
 
-        .social-icon {
+        .social-icon, .social-icon2 {
             width: 32px;
             height: 32px;
             background: #222222;
@@ -249,8 +268,20 @@
             transition: background 0.3s ease;
         }
 
-        .social-icon:hover {
+        .social-icon:hover, .social-icon2:hover {
             background: #333333;
+        }
+
+        .social-icon img {
+            width: 14px;
+            height: 14px;
+            display: block;
+        }
+
+        .social-icon2 img {
+            width: 18px;
+            height: 14px;
+            display: block;
         }
 
         .footer-logo {
@@ -458,19 +489,26 @@
 
     <!-- Footer -->
     <footer class="footer">
+        <div class="footer-stars">
+            <img src="images/starsfooter.png" alt="Stars decorative banner">
+        </div>
+        <div class="footer-divider"></div>
         <div class="footer-content">
             <div class="footer-left">
                 <div class="footer-copyright">© 2025 womp | <a href="terms-privacy.html" style="color: #A0A0A0; text-decoration: none; transition: color 0.3s ease;">Terms & Privacy</a></div>
                 <div class="footer-links">
                     <a href="index.html" id="nav-home">Home</a>
                     <a href="https://x.com/wompalarm" target="_blank" id="nav-story">Story</a>
-                    <a href="index.html#features" id="nav-features">Features</a>
+                    <a href="index.html#features" id="nav-features">Flow</a>
                 </div>
             </div>
             <div class="footer-social">
-                <div class="social-icon">@</div>
-                <div class="social-icon">X</div>
-                <div class="social-icon">in</div>
+                <a class="social-icon2" href="mailto:contact@womp.systems" target="_blank" rel="noopener noreferrer" aria-label="Email">
+                    <img src="images/mailicon.png" alt="Email icon">
+                </a>
+                <a class="social-icon" href="https://x.com/wompalarm" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <img src="images/twittericon.png" alt="Twitter icon">
+                </a>
             </div>
         </div>
         <div class="footer-logo">womp</div>
