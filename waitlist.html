@@ -3,24 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Waitlist - womp</title>
     <link rel="icon" type="image/x-icon" href="images/womplogo.png">
-    <title>Terms & Privacy</title>
     
-    <!-- Open Graph / Facebook / Twitter -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tongfeiz.github.io/womp_github/terms-privacy.html">
-    <meta property="og:title" content="Terms & Privacy - womp">
-    <meta property="og:description" content="Terms and Privacy Policy for womp">
-    <meta property="og:image" content="https://tongfeiz.github.io/womp_github/images/womprepocard.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://tongfeiz.github.io/womp_github/terms-privacy.html">
-    <meta name="twitter:title" content="Terms & Privacy - womp">
-    <meta name="twitter:description" content="Terms and Privacy Policy for womp">
-    <meta name="twitter:image" content="https://tongfeiz.github.io/womp_github/images/womprepocard.png">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -68,6 +53,7 @@
             background: rgba(31, 31, 31, 0.55);
             backdrop-filter: blur(16px);
         }
+
         .logo {
             display: flex;
             align-items: center;
@@ -130,51 +116,161 @@
             padding: 16px 28px;
             border-radius: 15px;
             transition: opacity 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav-button:hover {
             opacity: 0.7;
         }
 
-        /* Content Section */
-        .content-section {
+        /* Waitlist Form Section */
+        .waitlist-container {
             padding: 120px 40px 80px;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        .content-section.fade-in {
+        .waitlist-container.fade-in {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .content-title {
-            font-size: 35px;
+        .waitlist-title {
+            font-size: 42px;
             font-weight: 700;
             color: #eaeaea;
-            margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 16px;
             letter-spacing: -0.3px;
         }
 
-        .content-subtitle {
-            font-size: 24px;
-            font-weight: 700;
-            color: #eaeaea;
-            margin-top: 40px;
-            margin-bottom: 20px;
+        .waitlist-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: #A0A0A0;
+            text-align: center;
+            margin-bottom: 48px;
             letter-spacing: -0.2px;
         }
 
-        .content-text {
+        .waitlist-form {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 12px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waitlist-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 0.5px, transparent 0),
+                radial-gradient(circle at 3px 3px, rgba(0, 0, 0, 0.15) 0.5px, transparent 0);
+            background-size: 4px 4px, 2px 2px;
+            background-position: 0 0, 1px 1px;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-label {
+            display: block;
             font-size: 16px;
             font-weight: 400;
-            color: #A0A0A0;
-            line-height: 1.8;
-            margin-bottom: 20px;
+            color: #eaeaea;
+            margin-bottom: 12px;
             letter-spacing: -0.2px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: #030303;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            color: #eaeaea;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'DM Sans', sans-serif;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            letter-spacing: -0.2px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #FF7434;
+            background: #0a0a0a;
+        }
+
+        .form-input::placeholder {
+            color: #808080;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: #FF7434;
+            color: #ffffff;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 400;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: -0.2px;
+            margin-top: 8px;
+        }
+
+        .submit-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f44336;
+            display: block;
         }
 
         /* Footer */
@@ -194,11 +290,11 @@
             transform: translateY(0);
         }
 
-        /* Full-bleed stars banner above footer content */
         .footer-stars {
             width: 100vw;
             margin-left: calc(-50vw + 50%);
             margin-right: calc(-50vw + 50%);
+            margin-top: -13%;
         }
 
         .footer-stars img {
@@ -207,7 +303,6 @@
             display: block;
         }
 
-        /* Thin divider matching FAQ borders, within footer margins */
         .footer-divider {
             border-top: 1px solid #333333;
             margin: 20px 0 40px;
@@ -301,18 +396,6 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .header {
-                padding: 8px 8px;
-                padding-left: 25px;
-            }
-
-            .content-section {
-                padding: 100px 32px 60px;
-                max-width: 90%;
-            }
-        }
-
         @media (max-width: 768px) {
             .header {
                 padding: 8px 8px;
@@ -329,17 +412,22 @@
                 height: 28px;
             }
 
-            .content-section {
+            .waitlist-container {
                 padding: 100px 32px 60px;
                 max-width: 85%;
             }
 
-            .content-title {
+            .waitlist-title {
                 font-size: 32px;
             }
 
-            .content-subtitle {
-                font-size: 20px;
+            .waitlist-subtitle {
+                font-size: 16px;
+                margin-bottom: 32px;
+            }
+
+            .waitlist-form {
+                padding: 32px 24px;
             }
 
             .footer {
@@ -354,7 +442,7 @@
             }
 
             .footer-logo {
-                font-size: 120px;
+                font-size: 27vw;
                 margin-top: -60px;
                 margin-bottom: -60px;
             }
@@ -393,23 +481,42 @@
                 white-space: nowrap;
             }
 
-            .content-section {
-                padding: 100px 20px 50px;
+            .waitlist-container {
+                padding: 80px 20px 50px;
                 max-width: 100%;
             }
 
-            .content-title {
+            .waitlist-title {
                 font-size: 28px;
-                margin-bottom: 32px;
+                margin-bottom: 12px;
             }
 
-            .content-subtitle {
-                font-size: 18px;
-                margin-top: 32px;
+            .waitlist-subtitle {
+                font-size: 15px;
+                margin-bottom: 28px;
             }
 
-            .content-text {
-                font-size: 14px;
+            .waitlist-form {
+                padding: 24px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 24px;
+            }
+
+            .form-label {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .form-input {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+
+            .submit-button {
+                padding: 14px 24px;
+                font-size: 16px;
             }
 
             .footer {
@@ -449,42 +556,59 @@
         </div>
     </header>
 
-    <!-- Content Section -->
-    <section class="content-section">
-        <h1 class="content-title">Terms & Privacy</h1>
+    <!-- Waitlist Form Section -->
+    <section class="waitlist-container">
+        <h1 class="waitlist-title">Join the Waitlist</h1>
+        <p class="waitlist-subtitle">Be among the first to experience womp.</p>
         
-        <h2 class="content-subtitle">Terms of Service</h2>
-        <p class="content-text">
-            Welcome to womp. By accessing and using our website and services, you agree to be bound by these Terms of Service. Please read them carefully.
-        </p>
-        <p class="content-text">
-            womp provides innovative alarm clock technology designed to help users wake up more effectively. Our products are intended for personal use and should be used responsibly.
-        </p>
-        <p class="content-text">
-            We reserve the right to modify these terms at any time. Your continued use of our services after changes are posted constitutes acceptance of those changes.
-        </p>
-
-        <h2 class="content-subtitle">Privacy Policy</h2>
-        <p class="content-text">
-            At womp, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website and services.
-        </p>
-        <p class="content-text">
-            We collect information you provide directly to us, such as when you join our waitlist, create an account, or contact us. This may include your name, email address, and other contact information.
-        </p>
-        <p class="content-text">
-            We use your information to provide and improve our services, communicate with you, and send you updates about our products and services. We do not sell your personal information to third parties.
-        </p>
-        <p class="content-text">
-            We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security.
-        </p>
-        <p class="content-text">
-            If you have any questions about this Privacy Policy or our data practices, please contact us.
-        </p>
-
-        <h2 class="content-subtitle">Contact</h2>
-        <p class="content-text">
-            For any questions regarding these Terms & Privacy, please reach out to us through our official channels.
-        </p>
+        <form class="waitlist-form" id="waitlistForm">
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    class="form-input" 
+                    placeholder="Enter your name" 
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="age" class="form-label">Age</label>
+                <input 
+                    type="number" 
+                    id="age" 
+                    name="age" 
+                    class="form-input" 
+                    placeholder="Enter your age" 
+                    min="1" 
+                    max="120" 
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="Enter your email" 
+                    required
+                >
+            </div>
+            
+            <button type="submit" class="submit-button" id="submitButton">
+                Join Waitlist
+            </button>
+            
+            <div class="form-message" id="formMessage"></div>
+            
+            <!-- Hidden iframe for form submission -->
+            <iframe name="hiddenFrame" style="display: none;"></iframe>
+        </form>
     </section>
 
     <!-- Footer -->
@@ -497,9 +621,9 @@
             <div class="footer-left">
                 <div class="footer-copyright">© 2025 womp | <a href="terms-privacy.html" style="color: #A0A0A0; text-decoration: none; transition: color 0.3s ease;">Terms & Privacy</a></div>
                 <div class="footer-links">
-                    <a href="index.html" id="nav-home">Home</a>
-                    <a href="https://x.com/wompalarm" target="_blank" id="nav-story">Story</a>
-                    <a href="index.html#features" id="nav-features">Flow</a>
+                    <a href="index.html">Home</a>
+                    <a href="https://x.com/wompalarm" target="_blank">Story</a>
+                    <a href="waitlist.html">Waitlist</a>
                 </div>
             </div>
             <div class="footer-social">
@@ -515,38 +639,76 @@
     </footer>
 
     <script>
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections that should fade in
-        const sectionsToFade = document.querySelectorAll('.content-section, .footer');
-        sectionsToFade.forEach(section => {
-            observer.observe(section);
+        // Fade-in animation on load
+        window.addEventListener('load', function() {
+            const container = document.querySelector('.waitlist-container');
+            const footer = document.querySelector('.footer');
+            setTimeout(function() {
+                if (container) container.classList.add('fade-in');
+                if (footer) footer.classList.add('fade-in');
+            }, 120);
         });
 
-        // Handle Features link - if on terms page, go to index.html#features
-        const navFeatures = document.getElementById('nav-features');
-        if (navFeatures) {
-            navFeatures.addEventListener('click', function(e) {
-                e.preventDefault();
-                try {
-                    sessionStorage.setItem('scrollToFeatures', '1');
-                } catch (_) {}
-                window.location.href = 'index.html';
+        // Form submission handling
+        const form = document.getElementById('waitlistForm');
+        const submitButton = document.getElementById('submitButton');
+        const formMessage = document.getElementById('formMessage');
+        const hiddenFrame = document.querySelector('iframe[name="hiddenFrame"]');
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbyMWaZJVn0lWbtaz1RgCWGU7pH636QDyd03e-AUymXAyx8SVDpporbcij5-0igKCWc/exec';
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Validate before submission
+            const name = document.getElementById('name').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!name || !email) {
+                formMessage.textContent = 'Please fill in all required fields.';
+                formMessage.className = 'form-message error';
+                formMessage.style.display = 'block';
+                return;
+            }
+            
+            // Disable button and show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            formMessage.className = 'form-message';
+            formMessage.style.display = 'none';
+            
+            // Build URL with query parameters
+            const params = new URLSearchParams({
+                name: name,
+                age: age,
+                email: email
             });
-        }
+            const url = scriptUrl + '?' + params.toString();
+            
+            // Log the URL for debugging (check browser console)
+            console.log('Submitting to URL:', url);
+            
+            // Load the URL in the iframe
+            hiddenFrame.src = url;
+            
+            // Listen for the iframe load to detect when submission is complete
+            hiddenFrame.addEventListener('load', function onLoad() {
+                // Remove the listener to avoid multiple triggers
+                hiddenFrame.removeEventListener('load', onLoad);
+                
+                // Show success message after a short delay
+                setTimeout(function() {
+                    formMessage.textContent = 'Thank you! You\'ve been added to the waitlist.';
+                    formMessage.className = 'form-message success';
+                    formMessage.style.display = 'block';
+                    form.reset();
+                    
+                    // Re-enable button
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Join Waitlist';
+                }, 500);
+            }, { once: true });
+        });
     </script>
 </body>
 </html>
-
